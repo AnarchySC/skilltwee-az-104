@@ -147,6 +147,31 @@ Modify CSS variables for custom themes:
 background: linear-gradient(135deg, #yourcolor1 0%, #yourcolor2 100%);
 ```
 
-## 🤝 Contributing
+🤝 Contributing
+We welcome contributions! Please see CONTRIBUTING.md for guidelines.
+Ways to Contribute
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guideli
+🌳 Add new skill trees
+🐛 Report bugs
+✨ Suggest features
+📚 Add learning resources
+🌍 Add translations
+📝 Improve documentation
+
+📈 Roadmap
+
+ Backend integration for cloud saves
+ User accounts and social features
+ More certification paths (AWS, GCP, etc.)
+ Programming languages (JavaScript, Java, C++)
+ Soft skills trees (Leadership, Communication)
+ Mobile app (React Native)
+ Multiplayer challenges
+ API for third-party integration
+
+🙏 Acknowledgments
+
+Inspired by video game skill trees and RPG progression systems
+Python curriculum based on community best practices
+Azure content aligned with Microsoft Learn
+Built with ❤️ for the self-learning community
