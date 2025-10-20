@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ-104 Azure Administrator Skill Tree - Quest Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #050505;
+            background-image: 
+                radial-gradient(ellipse at top left, rgba(0, 123, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(0, 188, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 3em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin: 30px 0;
+            overflow: hidden;
+            position: relative;
+            border-radius: 100px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0078D4 0%, #00BCF2 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 100px;
+            box-shadow: 0 0 20px rgba(0, 120, 212, 0.5);
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 0.9em;
+            top: -25px;
+        }
+
+        .skill-tree {
+            display: grid;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .tier {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tier:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .tier-title {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #e2e8f0;
+        }
+
+        .tier-icon {
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 900;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 120, 212, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 120, 212, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill:hover::before {
+            opacity: 1;
+        }
+
+        .skill.unlocked {
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.15) 0%, rgba(0, 188, 242, 0.1) 100%);
+            border: 1px solid rgba(0, 120, 212, 0.4);
+            animation: unlock 0.5s ease;
+        }
+
+        .skill.unlocked::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .skill.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+
+        @keyframes unlock {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+            }
+            50% { 
+                transform: scale(1.05) rotate(1deg); 
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+            }
+        }
+
+        .skill-icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
+            font-size: 0.95em;
+            color: #e2e8f0;
+        }
+
+        .skill-desc {
+            font-size: 0.8em;
+            opacity: 0.5;
+            text-align: center;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .skill-points {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 120, 212, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            color: #00BCF2;
+            font-weight: 600;
+        }
+
+        .quest-indicator {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.75em;
+            color: #00BCF2;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .tier-1 { 
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.05) 0%, transparent 100%);
+        }
+        .tier-2 { 
+            background: linear-gradient(135deg, rgba(0, 188, 242, 0.05) 0%, transparent 100%);
+        }
+        .tier-3 { 
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, transparent 100%);
+        }
+        .tier-4 { 
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, transparent 100%);
+        }
+        .tier-5 { 
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, transparent 100%);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            color: #94a3b8;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background: #0a0a0a;
+            background-image: 
+                radial-gradient(ellipse at top, rgba(0, 120, 212, 0.1) 0%, transparent 50%);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlide 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        @keyframes modalSlide {
+            from { 
+                transform: translateY(-50px) scale(0.95); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+        }
+
+        .close {
+            color: #94a3b8;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .close:hover {
+            background: rgba(0, 120, 212, 0.2);
+            border-color: rgba(0, 120, 212, 0.4);
+            color: #e2e8f0;
+        }
+
+        .quest-list {
+            margin: 20px 0;
+        }
+
+        .quest-section {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quest-section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1em;
+        }
+
+        .quest-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .quest-item:hover {
+            background: rgba(0, 120, 212, 0.05);
+            border-color: rgba(0, 120, 212, 0.2);
+        }
+
+        .quest-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #0078D4;
+        }
+
+        .quest-text {
+            flex: 1;
+            font-size: 0.9em;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .quest-item.completed .quest-text {
+            text-decoration: line-through;
+            opacity: 0.4;
+        }
+
+        .mastery-button {
+            background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);
+            border: none;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mastery-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 120, 212, 0.3);
+        }
+
+        .mastery-button:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            cursor: not-allowed;
+            color: #64748b;
+        }
+
+        .resources {
+            background: rgba(0, 120, 212, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 120, 212, 0.1);
+        }
+
+        .resources-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #00BCF2;
+        }
+
+        .resource-link {
+            display: block;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .resource-link:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .resource-link:hover {
+            color: #00BCF2;
+            padding-left: 20px;
+        }
+
+        .resource-link:hover:before {
+            transform: translateX(5px);
+        }
+
+        .help-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85em;
+            opacity: 0.5;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>☁️ AZ-104 Azure Administrator Skill Tree</h1>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">0% Complete</div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="unlockedCount">0</div>
+                <div class="stat-label">Skills Unlocked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="totalCount">30</div>
+                <div class="stat-label">Total Skills</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="questsComplete">0</div>
+                <div class="stat-label">Quests Complete</div>
+            </div>
+        </div>
+
+        <div class="help-text">Click any skill to view quests and resources</div>
+
+        <div class="skill-tree">
+            <!-- Tier 1: Identity & Governance (15-20%) -->
+            <div class="tier tier-1">
+                <div class="tier-title">
+                    <span class="tier-icon">LV.1</span>
+                    Identity & Governance (15-20%)
+                </div>
+                <div class="skills-grid">
+                    <div class="skill" data-tier="1" data-skill="azure-ad">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">🔐</div>
+                        <div class="skill-name">Azure AD</div>
+                        <div class="skill-desc">Users, groups, guest accounts</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill" data-tier="1" data-skill="rbac">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🎭</div>
+                        <div class="skill-name">RBAC</div>
+                        <div class="skill-desc">Roles, assignments, custom roles</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill" data-tier="1" data-skill="management-groups">
+                        <div class="skill-points">+15 XP</div>
+                        <div class="skill-icon">🏢</div>
+                        <div class="skill-name">Management Groups</div>
+                        <div class="skill-desc">Hierarchy, inheritance</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill" data-tier="1" data-skill="azure-policy">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">📜</div>
+                        <div class="skill-name">Azure Policy</div>
+                        <div class="skill-desc">Compliance, initiatives, remediation</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill" data-tier="1" data-skill="resource-locks">
+                        <div class="skill-points">+10 XP</div>
+                        <div class="skill-icon">🔒</div>
+                        <div class="skill-name">Resource Locks</div>
+                        <div class="skill-desc">CanNotDelete, ReadOnly</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill" data-tier="1" data-skill="cost-management">
+                        <div class="skill-points">+15 XP</div>
+                        <div class="skill-icon">💰</div>
+                        <div class="skill-name">Cost Management</div>
+                        <div class="skill-desc">Budgets, alerts, recommendations</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 2: Storage (15-20%) -->
+            <div class="tier tier-2">
+                <div class="tier-title">
+                    <span class="tier-icon">LV.2</span>
+                    Storage (15-20%)
+                </div>
+                <div class="skills-grid">
+                    <div class="skill locked" data-tier="2" data-skill="storage-accounts">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">💾</div>
+                        <div class="skill-name">Storage Accounts</div>
+                        <div class="skill-desc">Types, replication, tiers</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="2" data-skill="blob-storage">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">📦</div>
+                        <div class="skill-name">Blob Storage</div>
+                        <div class="skill-desc">Containers, access levels, lifecycle</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="2" data-skill="azure-files">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">📁</div>
+                        <div class="skill-name">Azure Files</div>
+                        <div class="skill-desc">File shares, snapshots, sync</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="2" data-skill="storage-security">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🔑</div>
+                        <div class="skill-name">Storage Security</div>
+                        <div class="skill-desc">SAS, keys, firewall, encryption</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="2" data-skill="azcopy">
+                        <div class="skill-points">+15 XP</div>
+                        <div class="skill-icon">📤</div>
+                        <div class="skill-name">AzCopy & Tools</div>
+                        <div class="skill-desc">Import/Export, Storage Explorer</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="2" data-skill="managed-disks">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">💿</div>
+                        <div class="skill-name">Managed Disks</div>
+                        <div class="skill-desc">Types, snapshots, encryption</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 3: Compute (20-25%) -->
+            <div class="tier tier-3">
+                <div class="tier-title">
+                    <span class="tier-icon">LV.3</span>
+                    Compute (20-25%)
+                </div>
+                <div class="skills-grid">
+                    <div class="skill locked" data-tier="3" data-skill="virtual-machines">
+                        <div class="skill-points">+30 XP</div>
+                        <div class="skill-icon">🖥️</div>
+                        <div class="skill-name">Virtual Machines</div>
+                        <div class="skill-desc">Create, size, availability</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="3" data-skill="vm-extensions">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">🔧</div>
+                        <div class="skill-name">VM Extensions</div>
+                        <div class="skill-desc">DSC, Custom Script, Monitoring</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="3" data-skill="app-service">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">App Service</div>
+                        <div class="skill-desc">Web apps, plans, deployment</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="3" data-skill="containers">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🐳</div>
+                        <div class="skill-name">Containers</div>
+                        <div class="skill-desc">ACI, AKS basics, ACR</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="3" data-skill="scale-sets">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">📊</div>
+                        <div class="skill-name">Scale Sets</div>
+                        <div class="skill-desc">VMSS, autoscaling, updates</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="3" data-skill="availability">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">⚡</div>
+                        <div class="skill-name">High Availability</div>
+                        <div class="skill-desc">Zones, sets, SLA</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 4: Networking (25-30%) -->
+            <div class="tier tier-4">
+                <div class="tier-title">
+                    <span class="tier-icon">LV.4</span>
+                    Virtual Networking (25-30%)
+                </div>
+                <div class="skills-grid">
+                    <div class="skill locked" data-tier="4" data-skill="virtual-networks">
+                        <div class="skill-points">+35 XP</div>
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">Virtual Networks</div>
+                        <div class="skill-desc">VNets, subnets, IP addressing</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="4" data-skill="network-security">
+                        <div class="skill-points">+30 XP</div>
+                        <div class="skill-icon">🛡️</div>
+                        <div class="skill-name">Network Security</div>
+                        <div class="skill-desc">NSGs, ASGs, rules</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="4" data-skill="load-balancing">
+                        <div class="skill-points">+30 XP</div>
+                        <div class="skill-icon">⚖️</div>
+                        <div class="skill-name">Load Balancing</div>
+                        <div class="skill-desc">Azure LB, App Gateway, Traffic Mgr</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="4" data-skill="vpn-gateway">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🔐</div>
+                        <div class="skill-name">VPN Gateway</div>
+                        <div class="skill-desc">S2S, P2S, ExpressRoute</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="4" data-skill="dns">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">🌍</div>
+                        <div class="skill-name">Azure DNS</div>
+                        <div class="skill-desc">Zones, records, private DNS</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="4" data-skill="vnet-peering">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">🔗</div>
+                        <div class="skill-name">VNet Peering</div>
+                        <div class="skill-desc">Local, global, transit</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 5: Monitoring (10-15%) -->
+            <div class="tier tier-5">
+                <div class="tier-title">
+                    <span class="tier-icon">LV.5</span>
+                    Monitor and Maintain (10-15%)
+                </div>
+                <div class="skills-grid">
+                    <div class="skill locked" data-tier="5" data-skill="azure-monitor">
+                        <div class="skill-points">+30 XP</div>
+                        <div class="skill-icon">📊</div>
+                        <div class="skill-name">Azure Monitor</div>
+                        <div class="skill-desc">Metrics, logs, workbooks</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="5" data-skill="log-analytics">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">📈</div>
+                        <div class="skill-name">Log Analytics</div>
+                        <div class="skill-desc">KQL, workspaces, insights</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="5" data-skill="alerts">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">🚨</div>
+                        <div class="skill-name">Alerts</div>
+                        <div class="skill-desc">Action groups, rules, severity</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="5" data-skill="backup">
+                        <div class="skill-points">+25 XP</div>
+                        <div class="skill-icon">💾</div>
+                        <div class="skill-name">Azure Backup</div>
+                        <div class="skill-desc">Vault, policies, restore</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="5" data-skill="service-health">
+                        <div class="skill-points">+15 XP</div>
+                        <div class="skill-icon">🏥</div>
+                        <div class="skill-name">Service Health</div>
+                        <div class="skill-desc">Incidents, maintenance, advisories</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                    <div class="skill locked" data-tier="5" data-skill="network-watcher">
+                        <div class="skill-points">+20 XP</div>
+                        <div class="skill-icon">🔍</div>
+                        <div class="skill-name">Network Watcher</div>
+                        <div class="skill-desc">Diagnostics, topology, packet capture</div>
+                        <div class="quest-indicator">📋 View Quests</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quest Modal -->
+    <div id="questModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">
+                    <span id="modalIcon">🔐</span>
+                    <span id="modalSkillName">Skill Name</span>
+                </div>
+                <span class="close">&times;</span>
+            </div>
+            <div id="questContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const skillQuests = {
+            'azure-ad': {
+                icon: '🔐',
+                quests: {
+                    'Build Without Help': [
+                        'Create users and groups in Azure AD',
+                        'Configure guest user access',
+                        'Set up self-service password reset',
+                        'Configure MFA for users',
+                        'Implement dynamic group membership'
+                    ],
+                    'Understand & Explain': [
+                        'Know the difference between Azure AD and on-premise AD',
+                        'Explain user types: Member vs Guest',
+                        'Understand group types: Security vs Microsoft 365',
+                        'Know Azure AD licensing tiers and features'
+                    ],
+                    'Common Exam Questions': [
+                        'Bulk user creation with CSV templates',
+                        'Dynamic groups require Azure AD P1',
+                        'B2B collaboration scenarios'
+                    ]
+                },
+                resources: [
+                    { name: 'MS Learn: Azure AD Fundamentals', url: 'https://learn.microsoft.com/training/paths/azure-active-directory/' },
+                    { name: 'Azure AD Documentation', url: 'https://docs.microsoft.com/azure/active-directory/' },
+                    { name: 'John Savill Azure AD Deep Dive', url: 'https://www.youtube.com/watch?v=Ma7VAQE7ga4' }
+                ]
+            },
+            'rbac': {
+                icon: '🎭',
+                quests: {
+                    'Build Without Help': [
+                        'Assign built-in roles at different scopes',
+                        'Create custom roles with JSON',
+                        'Use deny assignments',
+                        'Implement PIM for just-in-time access'
+                    ],
+                    'Understand & Explain': [
+                        'Know the role hierarchy and inheritance',
+                        'Explain Actions vs NotActions vs DataActions',
+                        'Understand Owner vs Contributor vs Reader'
+                    ],
+                    'Common Exam Questions': [
+                        'Maximum custom roles per tenant (5000)',
+                        'Deny assignments override allow',
+                        'Role assignment takes up to 30 minutes to propagate'
+                    ]
+                },
+                resources: [
+                    { name: 'Azure RBAC Documentation', url: 'https://docs.microsoft.com/azure/role-based-access-control/' },
+                    { name: 'Built-in Roles Reference', url: 'https://docs.microsoft.com/azure/role-based-access-control/built-in-roles' }
+                ]
+            },
+            'management-groups': {
+                icon: '🏢',
+                quests: {
+                    'Build Without Help': [
+                        'Create management group hierarchy',
+                        'Move subscriptions between groups',
+                        'Apply policies at management group level'
+                    ],
+                    'Understand & Explain': [
+                        'Maximum depth is 6 levels (excluding root)',
+                        'Tenant Root Group is automatically created',
+                        'Policy and RBAC inheritance'
+                    ]
+                },
+                resources: [
+                    { name: 'Management Groups Overview', url: 'https://docs.microsoft.com/azure/governance/management-groups/overview' }
+                ]
+            },
+            'azure-policy': {
+                icon: '📜',
+                quests: {
+                    'Build Without Help': [
+                        'Create policy definitions',
+                        'Assign policies with parameters',
+                        'Create initiatives (policy sets)',
+                        'Configure remediation tasks'
+                    ],
+                    'Understand & Explain': [
+                        'Know policy effects: Deny, Audit, Append, DeployIfNotExists',
+                        'Understand evaluation cycle (1 hour default)',
+                        'DeployIfNotExists needs managed identity'
+                    ]
+                },
+                resources: [
+                    { name: 'Azure Policy Documentation', url: 'https://docs.microsoft.com/azure/governance/policy/' }
+                ]
+            },
+            'resource-locks': {
+                icon: '🔒',
+                quests: {
+                    'Build Without Help': [
+                        'Apply CanNotDelete locks',
+                        'Apply ReadOnly locks',
+                        'Remove locks via portal and CLI'
+                    ],
+                    'Understand & Explain': [
+                        'CanNotDelete vs ReadOnly differences',
+                        'Locks apply to all users and roles',
+                        'Locks dont prevent billing'
+                    ]
+                },
+                resources: []
+            },
+            'cost-management': {
+                icon: '💰',
+                quests: {
+                    'Build Without Help': [
+                        'Create budgets and alerts',
+                        'Configure cost analysis',
+                        'Set up cost allocation tags'
+                    ],
+                    'Understand & Explain': [
+                        'Budgets dont stop spending',
+                        'Cost data has 8-24 hour delay',
+                        'Know Azure Advisor 5 pillars'
+                    ]
+                },
+                resources: []
+            },
+            'storage-accounts': {
+                icon: '💾',
+                quests: {
+                    'Build Without Help': [
+                        'Create GPv2 storage accounts',
+                        'Configure replication (LRS, ZRS, GRS, RA-GRS)',
+                        'Set up lifecycle management'
+                    ],
+                    'Understand & Explain': [
+                        'Archive tier has 180-day early deletion fee',
+                        'Know replication SLAs',
+                        'Premium only supports LRS/ZRS'
+                    ]
+                },
+                resources: []
+            },
+            'blob-storage': {
+                icon: '📦',
+                quests: {
+                    'Build Without Help': [
+                        'Create containers with access levels',
+                        'Configure blob versioning and snapshots',
+                        'Set up static website hosting'
+                    ],
+                    'Understand & Explain': [
+                        'Container access levels: Private, Blob, Container',
+                        'Page blobs for VHDs, Block blobs for files',
+                        'Maximum block blob size'
+                    ]
+                },
+                resources: []
+            },
+            'azure-files': {
+                icon: '📁',
+                quests: {
+                    'Build Without Help': [
+                        'Create file shares',
+                        'Mount on Windows/Linux',
+                        'Configure Azure File Sync'
+                    ],
+                    'Understand & Explain': [
+                        'Port 445 must be open',
+                        'NFS requires Premium tier',
+                        'File Sync components'
+                    ]
+                },
+                resources: []
+            },
+            'storage-security': {
+                icon: '🔑',
+                quests: {
+                    'Build Without Help': [
+                        'Generate SAS tokens',
+                        'Configure firewall rules',
+                        'Set up private endpoints'
+                    ],
+                    'Understand & Explain': [
+                        'SAS cannot be revoked once created',
+                        'Account vs Service SAS',
+                        'Always use HTTPS with SAS'
+                    ]
+                },
+                resources: []
+            },
+            'azcopy': {
+                icon: '📤',
+                quests: {
+                    'Build Without Help': [
+                        'Install and use AzCopy',
+                        'Copy between storage accounts',
+                        'Use with SAS tokens'
+                    ]
+                },
+                resources: []
+            },
+            'managed-disks': {
+                icon: '💿',
+                quests: {
+                    'Build Without Help': [
+                        'Create managed disks',
+                        'Take snapshots',
+                        'Change disk types'
+                    ]
+                },
+                resources: []
+            },
+            'virtual-machines': {
+                icon: '🖥️',
+                quests: {
+                    'Build Without Help': [
+                        'Create Windows and Linux VMs',
+                        'Configure availability sets/zones',
+                        'Resize VMs'
+                    ],
+                    'Understand & Explain': [
+                        'B-series are burstable',
+                        'Availability zones = 99.99% SLA',
+                        'Generation 1 vs 2 VMs'
+                    ]
+                },
+                resources: []
+            },
+            'vm-extensions': {
+                icon: '🔧',
+                quests: {
+                    'Build Without Help': [
+                        'Install Custom Script Extension',
+                        'Configure DSC extension'
+                    ]
+                },
+                resources: []
+            },
+            'app-service': {
+                icon: '🌐',
+                quests: {
+                    'Build Without Help': [
+                        'Create App Service plans',
+                        'Deploy web apps',
+                        'Configure deployment slots'
+                    ]
+                },
+                resources: []
+            },
+            'containers': {
+                icon: '🐳',
+                quests: {
+                    'Build Without Help': [
+                        'Deploy ACI',
+                        'Create ACR',
+                        'Basic AKS deployment'
+                    ]
+                },
+                resources: []
+            },
+            'scale-sets': {
+                icon: '📊',
+                quests: {
+                    'Build Without Help': [
+                        'Create VMSS',
+                        'Configure autoscaling'
+                    ]
+                },
+                resources: []
+            },
+            'availability': {
+                icon: '⚡',
+                quests: {
+                    'Build Without Help': [
+                        'Configure availability sets',
+                        'Deploy to availability zones'
+                    ]
+                },
+                resources: []
+            },
+            'virtual-networks': {
+                icon: '🌐',
+                quests: {
+                    'Build Without Help': [
+                        'Create VNets and subnets',
+                        'Configure IP addressing',
+                        'Set up service endpoints'
+                    ],
+                    'Understand & Explain': [
+                        'Azure reserves 5 IPs per subnet',
+                        '/29 is smallest subnet',
+                        'Cannot change address space with peering'
+                    ]
+                },
+                resources: []
+            },
+            'network-security': {
+                icon: '🛡️',
+                quests: {
+                    'Build Without Help': [
+                        'Create NSGs and rules',
+                        'Configure ASGs',
+                        'Set up Azure Firewall'
+                    ],
+                    'Understand & Explain': [
+                        'Lower priority = higher precedence',
+                        'NSGs are stateful',
+                        'Default rules cannot be deleted'
+                    ]
+                },
+                resources: []
+            },
+            'load-balancing': {
+                icon: '⚖️',
+                quests: {
+                    'Build Without Help': [
+                        'Create Load Balancer',
+                        'Configure Application Gateway',
+                        'Set up Traffic Manager'
+                    ]
+                },
+                resources: []
+            },
+            'vpn-gateway': {
+                icon: '🔐',
+                quests: {
+                    'Build Without Help': [
+                        'Create VPN Gateway',
+                        'Configure S2S VPN',
+                        'Set up P2S VPN'
+                    ]
+                },
+                resources: []
+            },
+            'dns': {
+                icon: '🌍',
+                quests: {
+                    'Build Without Help': [
+                        'Create DNS zones',
+                        'Configure records',
+                        'Set up private DNS'
+                    ]
+                },
+                resources: []
+            },
+            'vnet-peering': {
+                icon: '🔗',
+                quests: {
+                    'Build Without Help': [
+                        'Configure VNet peering',
+                        'Set up global peering'
+                    ]
+                },
+                resources: []
+            },
+            'azure-monitor': {
+                icon: '📊',
+                quests: {
+                    'Build Without Help': [
+                        'Configure metrics',
+                        'Create workbooks',
+                        'Set up diagnostics'
+                    ],
+                    'Understand & Explain': [
+                        'Metrics retained for 93 days',
+                        'Platform vs Guest metrics'
+                    ]
+                },
+                resources: []
+            },
+            'log-analytics': {
+                icon: '📈',
+                quests: {
+                    'Build Without Help': [
+                        'Create workspaces',
+                        'Write KQL queries'
+                    ]
+                },
+                resources: []
+            },
+            'alerts': {
+                icon: '🚨',
+                quests: {
+                    'Build Without Help': [
+                        'Create alert rules',
+                        'Configure action groups'
+                    ]
+                },
+                resources: []
+            },
+            'backup': {
+                icon: '💾',
+                quests: {
+                    'Build Without Help': [
+                        'Create Recovery Services vault',
+                        'Configure backup policies',
+                        'Perform restore'
+                    ]
+                },
+                resources: []
+            },
+            'service-health': {
+                icon: '🏥',
+                quests: {
+                    'Build Without Help': [
+                        'Configure health alerts',
+                        'Review advisories'
+                    ]
+                },
+                resources: []
+            },
+            'network-watcher': {
+                icon: '🔍',
+                quests: {
+                    'Build Without Help': [
+                        'Enable Network Watcher',
+                        'Use IP flow verify',
+                        'Configure packet capture'
+                    ]
+                },
+                resources: []
+            }
+        };
+
+        let unlockedSkills = JSON.parse(window.localStorage.getItem('az104SkillTree')) || {};
+        let questProgress = JSON.parse(window.localStorage.getItem('az104QuestProgress')) || {};
+        let currentSkill = null;
+
+        function initSkillTree() {
+            updateProgress();
+            restoreUnlockedSkills();
+            setupEventListeners();
+            updateQuestCount();
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.skill').forEach(skill => {
+                skill.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (this.classList.contains('locked') && !e.target.classList.contains('quest-indicator')) {
+                        return;
+                    }
+
+                    const skillId = this.dataset.skill;
+                    openQuestModal(skillId);
+                });
+            });
+
+            document.querySelector('.close').addEventListener('click', closeModal);
+            
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('questModal');
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        function openQuestModal(skillId) {
+            currentSkill = skillId;
+            const modal = document.getElementById('questModal');
+            const skillData = skillQuests[skillId];
+            
+            if (!skillData) {
+                console.error('No quest data for skill:', skillId);
+                return;
+            }
+
+            document.getElementById('modalIcon').textContent = skillData.icon;
+            const skillElement = document.querySelector(`[data-skill="${skillId}"]`);
+            document.getElementById('modalSkillName').textContent = skillElement.querySelector('.skill-name').textContent;
+
+            let questHTML = '<div class="quest-list">';
+            
+            Object.keys(skillData.quests).forEach(section => {
+                questHTML += `
+                    <div class="quest-section">
+                        <div class="quest-section-title">✅ ${section}</div>
+                `;
+                
+                skillData.quests[section].forEach((quest, index) => {
+                    const questId = `${skillId}-${section}-${index}`;
+                    const isCompleted = questProgress[questId] || false;
+                    
+                    questHTML += `
+                        <div class="quest-item ${isCompleted ? 'completed' : ''}" data-quest-id="${questId}">
+                            <input type="checkbox" class="quest-checkbox" ${isCompleted ? 'checked' : ''}>
+                            <span class="quest-text">${quest}</span>
+                        </div>
+                    `;
+                });
+                
+                questHTML += '</div>';
+            });
+
+            if (skillData.resources && skillData.resources.length > 0) {
+                questHTML += `
+                    <div class="resources">
+                        <div class="resources-title">📚 Free Learning Resources:</div>
+                `;
+                skillData.resources.forEach(resource => {
+                    questHTML += `<a href="${resource.url}" class="resource-link" target="_blank">→ ${resource.name}</a>`;
+                });
+                questHTML += '</div>';
+            }
+
+            const allQuests = getAllQuestsForSkill(skillId);
+            const completedQuests = allQuests.filter(qId => questProgress[qId]).length;
+            const isComplete = completedQuests === allQuests.length;
+            
+            questHTML += `
+                <button class="mastery-button" ${!isComplete ? 'disabled' : ''} id="masteryBtn">
+                    ${unlockedSkills[skillId] ? '✅ Skill Mastered!' : 'Mark as Mastered'} (${completedQuests}/${allQuests.length} quests)
+                </button>
+            `;
+            
+            questHTML += '</div>';
+
+            document.getElementById('questContent').innerHTML = questHTML;
+
+            document.querySelectorAll('.quest-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', handleQuestToggle);
+            });
+
+            document.getElementById('masteryBtn').addEventListener('click', handleMastery);
+
+            modal.classList.add('show');
+        }
+
+        function handleQuestToggle(e) {
+            const questItem = e.target.closest('.quest-item');
+            const questId = questItem.dataset.questId;
+            
+            questProgress[questId] = e.target.checked;
+            questItem.classList.toggle('completed', e.target.checked);
+            
+            window.localStorage.setItem('az104QuestProgress', JSON.stringify(questProgress));
+            
+            const allQuests = getAllQuestsForSkill(currentSkill);
+            const completedQuests = allQuests.filter(qId => questProgress[qId]).length;
+            const isComplete = completedQuests === allQuests.length;
+            
+            const masteryBtn = document.getElementById('masteryBtn');
+            masteryBtn.disabled = !isComplete;
+            masteryBtn.textContent = `${unlockedSkills[currentSkill] ? '✅ Skill Mastered!' : 'Mark as Mastered'} (${completedQuests}/${allQuests.length} quests)`;
+            
+            updateQuestCount();
+        }
+
+        function getAllQuestsForSkill(skillId) {
+            const skillData = skillQuests[skillId];
+            if (!skillData) return [];
+            
+            const questIds = [];
+            Object.keys(skillData.quests).forEach(section => {
+                skillData.quests[section].forEach((_, index) => {
+                    questIds.push(`${skillId}-${section}-${index}`);
+                });
+            });
+            return questIds;
+        }
+
+        function handleMastery() {
+            const skillElement = document.querySelector(`[data-skill="${currentSkill}"]`);
+            
+            if (!unlockedSkills[currentSkill]) {
+                unlockedSkills[currentSkill] = true;
+                skillElement.classList.add('unlocked');
+            } else {
+                unlockedSkills[currentSkill] = false;
+                skillElement.classList.remove('unlocked');
+            }
+            
+            window.localStorage.setItem('az104SkillTree', JSON.stringify(unlockedSkills));
+            updateProgress();
+            checkTierUnlocking();
+            
+            const masteryBtn = document.getElementById('masteryBtn');
+            masteryBtn.textContent = unlockedSkills[currentSkill] ? '✅ Skill Mastered!' : 'Mark as Mastered';
+        }
+
+        function closeModal() {
+            document.getElementById('questModal').classList.remove('show');
+            currentSkill = null;
+        }
+
+        function restoreUnlockedSkills() {
+            Object.keys(unlockedSkills).forEach(skillId => {
+                const skillElement = document.querySelector(`[data-skill="${skillId}"]`);
+                if (skillElement && unlockedSkills[skillId]) {
+                    skillElement.classList.add('unlocked');
+                }
+            });
+            checkTierUnlocking();
+        }
+
+        function updateProgress() {
+            const unlockedCount = Object.values(unlockedSkills).filter(v => v).length;
+            const percentage = Math.round((unlockedCount / 30) * 100);
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% Complete';
+            document.getElementById('unlockedCount').textContent = unlockedCount;
+        }
+
+        function updateQuestCount() {
+            const totalQuests = Object.keys(questProgress).filter(k => questProgress[k]).length;
+            document.getElementById('questsComplete').textContent = totalQuests;
+        }
+
+        function checkTierUnlocking() {
+            const tiers = [1, 2, 3, 4, 5];
+            
+            tiers.forEach((tier, index) => {
+                if (index === 0) return;
+                
+                const previousTierSkills = document.querySelectorAll(`.skill[data-tier="${tier - 1}"]`);
+                const currentTierSkills = document.querySelectorAll(`.skill[data-tier="${tier}"]`);
+                
+                const unlockedInPrevious = Array.from(previousTierSkills).filter(s => 
+                    s.classList.contains('unlocked')
+                ).length;
+                
+                const shouldUnlock = unlockedInPrevious >= Math.floor(previousTierSkills.length * 0.8);
+                
+                currentTierSkills.forEach(skill => {
+                    if (shouldUnlock) {
+                        skill.classList.remove('locked');
+                    } else {
+                        if (!skill.classList.contains('unlocked')) {
+                            skill.classList.add('locked');
+                        }
+                    }
+                });
+            });
+        }
+
+        initSkillTree();
+    </script>
+</body>
+</html>
