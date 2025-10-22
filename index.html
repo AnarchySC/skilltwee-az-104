@@ -830,8 +830,9 @@
                     ]
                 },
                 resources: [
-                    { name: 'MS Learn: Azure AD Fundamentals', url: 'https://learn.microsoft.com/training/paths/azure-active-directory/' },
-                    { name: 'Azure AD Documentation', url: 'https://docs.microsoft.com/azure/active-directory/' },
+                    { name: 'MS Learn: Describe Azure identity, access, and security', url: 'https://learn.microsoft.com/training/modules/describe-azure-identity-access-security/' },
+                    { name: 'Microsoft Entra ID Documentation', url: 'https://learn.microsoft.com/entra/identity/' },
+                    { name: 'Azure Identity Management Best Practices', url: 'https://learn.microsoft.com/azure/security/fundamentals/identity-management-best-practices' },
                     { name: 'John Savill Azure AD Deep Dive', url: 'https://www.youtube.com/watch?v=Ma7VAQE7ga4' }
                 ]
             },
@@ -856,8 +857,9 @@
                     ]
                 },
                 resources: [
-                    { name: 'Azure RBAC Documentation', url: 'https://docs.microsoft.com/azure/role-based-access-control/' },
-                    { name: 'Built-in Roles Reference', url: 'https://docs.microsoft.com/azure/role-based-access-control/built-in-roles' }
+                    { name: 'Azure RBAC Documentation', url: 'https://learn.microsoft.com/azure/role-based-access-control/overview' },
+                    { name: 'Built-in Roles Reference', url: 'https://learn.microsoft.com/azure/role-based-access-control/built-in-roles' },
+                    { name: 'RBAC Best Practices', url: 'https://learn.microsoft.com/azure/role-based-access-control/best-practices' }
                 ]
             },
             'management-groups': {
@@ -875,7 +877,9 @@
                     ]
                 },
                 resources: [
-                    { name: 'Management Groups Overview', url: 'https://docs.microsoft.com/azure/governance/management-groups/overview' }
+                    { name: 'Management Groups Overview', url: 'https://learn.microsoft.com/azure/governance/management-groups/overview' },
+                    { name: 'Organize Resources with Management Groups', url: 'https://learn.microsoft.com/training/modules/use-azure-resource-manager/' },
+                    { name: 'Cloud Adoption Framework - Management Groups', url: 'https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups' }
                 ]
             },
             'azure-policy': {
@@ -894,7 +898,10 @@
                     ]
                 },
                 resources: [
-                    { name: 'Azure Policy Documentation', url: 'https://docs.microsoft.com/azure/governance/policy/' }
+                    { name: 'Azure Policy Documentation', url: 'https://learn.microsoft.com/azure/governance/policy/overview' },
+                    { name: 'Policy Samples GitHub', url: 'https://github.com/Azure/azure-policy' },
+                    { name: 'Policy Effects Explained', url: 'https://learn.microsoft.com/azure/governance/policy/concepts/effects' },
+                    { name: 'MS Learn: Azure Policy', url: 'https://learn.microsoft.com/training/modules/intro-to-governance/' }
                 ]
             },
             'resource-locks': {
@@ -911,7 +918,10 @@
                         'Locks dont prevent billing'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Resource Locks Documentation', url: 'https://learn.microsoft.com/azure/azure-resource-manager/management/lock-resources' },
+                    { name: 'Protect Azure Resources with Locks', url: 'https://learn.microsoft.com/training/modules/use-azure-resource-manager/' }
+                ]
             },
             'cost-management': {
                 icon: '💰',
@@ -927,7 +937,12 @@
                         'Know Azure Advisor 5 pillars'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Cost Management + Billing', url: 'https://learn.microsoft.com/azure/cost-management-billing/' },
+                    { name: 'Azure Pricing Calculator', url: 'https://azure.microsoft.com/pricing/calculator/' },
+                    { name: 'Control Azure Spending and Manage Bills', url: 'https://learn.microsoft.com/training/modules/control-azure-spending-manage-bills/' },
+                    { name: 'Azure Advisor Documentation', url: 'https://learn.microsoft.com/azure/advisor/' }
+                ]
             },
             'storage-accounts': {
                 icon: '💾',
@@ -943,7 +958,11 @@
                         'Premium only supports LRS/ZRS'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Storage Account Overview', url: 'https://learn.microsoft.com/azure/storage/common/storage-account-overview' },
+                    { name: 'Storage Redundancy Options', url: 'https://learn.microsoft.com/azure/storage/common/storage-redundancy' },
+                    { name: 'MS Learn: Azure Storage Fundamentals', url: 'https://learn.microsoft.com/training/modules/azure-storage-fundamentals/' }
+                ]
             },
             'blob-storage': {
                 icon: '📦',
@@ -959,7 +978,11 @@
                         'Maximum block blob size'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Blob Storage Documentation', url: 'https://learn.microsoft.com/azure/storage/blobs/' },
+                    { name: 'Static Website Hosting', url: 'https://learn.microsoft.com/azure/storage/blobs/storage-blob-static-website' },
+                    { name: 'Work with Blob Storage', url: 'https://learn.microsoft.com/training/modules/work-with-blob-storage/' }
+                ]
             },
             'azure-files': {
                 icon: '📁',
@@ -975,7 +998,11 @@
                         'File Sync components'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Files Documentation', url: 'https://learn.microsoft.com/azure/storage/files/' },
+                    { name: 'Azure File Sync Planning', url: 'https://learn.microsoft.com/azure/storage/file-sync/file-sync-planning' },
+                    { name: 'Manage Azure File Shares', url: 'https://learn.microsoft.com/training/modules/manage-azure-file-shares/' }
+                ]
             },
             'storage-security': {
                 icon: '🔑',
@@ -991,7 +1018,11 @@
                         'Always use HTTPS with SAS'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Storage Security Guide', url: 'https://learn.microsoft.com/azure/storage/common/storage-security-guide' },
+                    { name: 'SAS Overview', url: 'https://learn.microsoft.com/azure/storage/common/storage-sas-overview' },
+                    { name: 'Configure Storage Security', url: 'https://learn.microsoft.com/training/modules/configure-storage-security/' }
+                ]
             },
             'azcopy': {
                 icon: '📤',
@@ -1002,7 +1033,11 @@
                         'Use with SAS tokens'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'AzCopy Documentation', url: 'https://learn.microsoft.com/azure/storage/common/storage-use-azcopy-v10' },
+                    { name: 'Storage Explorer', url: 'https://azure.microsoft.com/features/storage-explorer/' },
+                    { name: 'Import/Export Service', url: 'https://learn.microsoft.com/azure/import-export/' }
+                ]
             },
             'managed-disks': {
                 icon: '💿',
@@ -1013,7 +1048,11 @@
                         'Change disk types'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Managed Disks Overview', url: 'https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview' },
+                    { name: 'Disk Types and Performance', url: 'https://learn.microsoft.com/azure/virtual-machines/disks-types' },
+                    { name: 'Configure Virtual Machine Storage', url: 'https://learn.microsoft.com/training/modules/configure-virtual-machine-storage/' }
+                ]
             },
             'virtual-machines': {
                 icon: '🖥️',
@@ -1029,7 +1068,12 @@
                         'Generation 1 vs 2 VMs'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Virtual Machines Documentation', url: 'https://learn.microsoft.com/azure/virtual-machines/' },
+                    { name: 'VM Sizes and Types', url: 'https://learn.microsoft.com/azure/virtual-machines/sizes' },
+                    { name: 'MS Learn: Create a Virtual Machine', url: 'https://learn.microsoft.com/training/modules/create-windows-virtual-machine-in-azure/' },
+                    { name: 'Availability Options for VMs', url: 'https://learn.microsoft.com/azure/virtual-machines/availability' }
+                ]
             },
             'vm-extensions': {
                 icon: '🔧',
@@ -1039,7 +1083,11 @@
                         'Configure DSC extension'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'VM Extensions Overview', url: 'https://learn.microsoft.com/azure/virtual-machines/extensions/overview' },
+                    { name: 'Custom Script Extension', url: 'https://learn.microsoft.com/azure/virtual-machines/extensions/custom-script-windows' },
+                    { name: 'DSC Extension', url: 'https://learn.microsoft.com/azure/virtual-machines/extensions/dsc-overview' }
+                ]
             },
             'app-service': {
                 icon: '🌐',
@@ -1050,7 +1098,11 @@
                         'Configure deployment slots'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'App Service Documentation', url: 'https://learn.microsoft.com/azure/app-service/' },
+                    { name: 'Deploy a Web App', url: 'https://learn.microsoft.com/training/modules/host-a-web-app-with-azure-app-service/' },
+                    { name: 'App Service Plans', url: 'https://learn.microsoft.com/azure/app-service/overview-hosting-plans' }
+                ]
             },
             'containers': {
                 icon: '🐳',
@@ -1061,7 +1113,12 @@
                         'Basic AKS deployment'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Container Instances', url: 'https://learn.microsoft.com/azure/container-instances/' },
+                    { name: 'Azure Kubernetes Service', url: 'https://learn.microsoft.com/azure/aks/' },
+                    { name: 'Azure Container Registry', url: 'https://learn.microsoft.com/azure/container-registry/' },
+                    { name: 'Run Containers in Azure', url: 'https://learn.microsoft.com/training/modules/run-docker-with-azure-container-instances/' }
+                ]
             },
             'scale-sets': {
                 icon: '📊',
@@ -1071,7 +1128,11 @@
                         'Configure autoscaling'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'VM Scale Sets Overview', url: 'https://learn.microsoft.com/azure/virtual-machine-scale-sets/overview' },
+                    { name: 'Autoscaling Documentation', url: 'https://learn.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-autoscale-overview' },
+                    { name: 'Build a Scalable Application', url: 'https://learn.microsoft.com/training/modules/build-app-with-scale-sets/' }
+                ]
             },
             'availability': {
                 icon: '⚡',
@@ -1081,7 +1142,11 @@
                         'Deploy to availability zones'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Availability Options for VMs', url: 'https://learn.microsoft.com/azure/virtual-machines/availability' },
+                    { name: 'Availability Zones', url: 'https://learn.microsoft.com/azure/reliability/availability-zones-overview' },
+                    { name: 'Design for High Availability', url: 'https://learn.microsoft.com/training/modules/design-for-high-availability/' }
+                ]
             },
             'virtual-networks': {
                 icon: '🌐',
@@ -1097,7 +1162,11 @@
                         'Cannot change address space with peering'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Virtual Network Documentation', url: 'https://learn.microsoft.com/azure/virtual-network/' },
+                    { name: 'Design Virtual Networks', url: 'https://learn.microsoft.com/training/modules/design-ip-addressing-for-azure/' },
+                    { name: 'Network Best Practices', url: 'https://learn.microsoft.com/azure/virtual-network/virtual-network-vnet-plan-design-arm' }
+                ]
             },
             'network-security': {
                 icon: '🛡️',
@@ -1113,7 +1182,11 @@
                         'Default rules cannot be deleted'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Network Security Groups', url: 'https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview' },
+                    { name: 'Azure Firewall Documentation', url: 'https://learn.microsoft.com/azure/firewall/' },
+                    { name: 'Configure Network Security', url: 'https://learn.microsoft.com/training/modules/configure-network-security-groups/' }
+                ]
             },
             'load-balancing': {
                 icon: '⚖️',
@@ -1124,7 +1197,12 @@
                         'Set up Traffic Manager'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Load Balancer', url: 'https://learn.microsoft.com/azure/load-balancer/load-balancer-overview' },
+                    { name: 'Application Gateway', url: 'https://learn.microsoft.com/azure/application-gateway/' },
+                    { name: 'Traffic Manager', url: 'https://learn.microsoft.com/azure/traffic-manager/' },
+                    { name: 'Load Balance Web Traffic', url: 'https://learn.microsoft.com/training/modules/load-balance-web-traffic-with-application-gateway/' }
+                ]
             },
             'vpn-gateway': {
                 icon: '🔐',
@@ -1135,7 +1213,11 @@
                         'Set up P2S VPN'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'VPN Gateway Documentation', url: 'https://learn.microsoft.com/azure/vpn-gateway/' },
+                    { name: 'ExpressRoute Overview', url: 'https://learn.microsoft.com/azure/expressroute/' },
+                    { name: 'Configure VPN Gateway', url: 'https://learn.microsoft.com/training/modules/configure-vpn-gateway/' }
+                ]
             },
             'dns': {
                 icon: '🌍',
@@ -1146,7 +1228,11 @@
                         'Set up private DNS'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure DNS Documentation', url: 'https://learn.microsoft.com/azure/dns/' },
+                    { name: 'Private DNS Zones', url: 'https://learn.microsoft.com/azure/dns/private-dns-overview' },
+                    { name: 'Host Your Domain on Azure DNS', url: 'https://learn.microsoft.com/training/modules/host-domain-azure-dns/' }
+                ]
             },
             'vnet-peering': {
                 icon: '🔗',
@@ -1156,7 +1242,11 @@
                         'Set up global peering'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Virtual Network Peering', url: 'https://learn.microsoft.com/azure/virtual-network/virtual-network-peering-overview' },
+                    { name: 'Configure VNet Peering', url: 'https://learn.microsoft.com/training/modules/configure-vnet-peering/' },
+                    { name: 'Hub-Spoke Network Topology', url: 'https://learn.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke' }
+                ]
             },
             'azure-monitor': {
                 icon: '📊',
@@ -1171,7 +1261,12 @@
                         'Platform vs Guest metrics'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Monitor Overview', url: 'https://learn.microsoft.com/azure/azure-monitor/overview' },
+                    { name: 'Metrics Documentation', url: 'https://learn.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics' },
+                    { name: 'Monitor Azure Resources', url: 'https://learn.microsoft.com/training/modules/monitor-azure-resources/' },
+                    { name: 'Azure Monitor Workbooks', url: 'https://learn.microsoft.com/azure/azure-monitor/visualize/workbooks-overview' }
+                ]
             },
             'log-analytics': {
                 icon: '📈',
@@ -1181,7 +1276,11 @@
                         'Write KQL queries'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Log Analytics Documentation', url: 'https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-overview' },
+                    { name: 'KQL Tutorial', url: 'https://learn.microsoft.com/azure/data-explorer/kusto/query/tutorial' },
+                    { name: 'Analyze Logs with KQL', url: 'https://learn.microsoft.com/training/modules/analyze-logs-with-kql/' }
+                ]
             },
             'alerts': {
                 icon: '🚨',
@@ -1191,7 +1290,11 @@
                         'Configure action groups'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Monitor Alerts', url: 'https://learn.microsoft.com/azure/azure-monitor/alerts/alerts-overview' },
+                    { name: 'Action Groups', url: 'https://learn.microsoft.com/azure/azure-monitor/alerts/action-groups' },
+                    { name: 'Configure Alerts', url: 'https://learn.microsoft.com/training/modules/configure-azure-alerts/' }
+                ]
             },
             'backup': {
                 icon: '💾',
@@ -1202,7 +1305,11 @@
                         'Perform restore'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Backup Documentation', url: 'https://learn.microsoft.com/azure/backup/' },
+                    { name: 'Recovery Services Vault', url: 'https://learn.microsoft.com/azure/backup/backup-azure-recovery-services-vault-overview' },
+                    { name: 'Configure VM Backup', url: 'https://learn.microsoft.com/training/modules/configure-virtual-machine-backups/' }
+                ]
             },
             'service-health': {
                 icon: '🏥',
@@ -1212,7 +1319,11 @@
                         'Review advisories'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Azure Service Health', url: 'https://learn.microsoft.com/azure/service-health/' },
+                    { name: 'Configure Health Alerts', url: 'https://learn.microsoft.com/azure/service-health/alerts-activity-log-service-notifications-portal' },
+                    { name: 'Resource Health Overview', url: 'https://learn.microsoft.com/azure/service-health/resource-health-overview' }
+                ]
             },
             'network-watcher': {
                 icon: '🔍',
@@ -1223,7 +1334,11 @@
                         'Configure packet capture'
                     ]
                 },
-                resources: []
+                resources: [
+                    { name: 'Network Watcher Documentation', url: 'https://learn.microsoft.com/azure/network-watcher/' },
+                    { name: 'Network Diagnostics', url: 'https://learn.microsoft.com/azure/network-watcher/network-watcher-network-configuration-diagnostics-overview' },
+                    { name: 'Monitor Networks', url: 'https://learn.microsoft.com/training/modules/monitor-diagnose-networks-azure-network-watcher/' }
+                ]
             }
         };
 
